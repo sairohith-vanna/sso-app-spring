@@ -12,6 +12,14 @@ import com.opencsv.CSVWriter;
 @Service
 public class CSVService {
 
+	/**
+	 * Writes some sample data to a temporary csv file.
+	 * Extracts the bytes from the generated file, and deletes the temporary file.
+	 * 
+	 * @return The bytes of the csv file
+	 * 
+	 * @throws IOException
+	 */
 	public byte[] writeSampleCSV() throws IOException
 	{
 		File tempCSVFile = File.createTempFile("sample", ".csv");
@@ -19,6 +27,8 @@ public class CSVService {
 		csvWriter.writeNext(new String[] {"username", "password"});
 		csvWriter.writeNext(new String[] {"admin_1", "sy@7#npl_89"});
 		csvWriter.close();
-		return FileCopyUtils.copyToByteArray(tempCSVFile);
+		byte[] csvBytes = FileCopyUtils.copyToByteArray(tempCSVFile);
+		tempCSVFile.delete();
+		return csvBytes;
 	}
 }
